@@ -20,7 +20,7 @@ def _fetch_dataset():
         print('Dataset loaded successfully as Dataframe!')
         return df
     except Exception as e:
-        print('Could not fetch dataset from GitHub: {e}')
+        print(f'Could not fetch dataset from GitHub: {e}')
         return
 
 
@@ -66,4 +66,4 @@ def _export_song_recommendations(recommendations):
             pickle.dump(current_recommendations, file)
         print('Recommendations successfully exported!')
     except Exception as e:
-        print('Failed to export recommendations: {e}')
+        print(f'Failed to export recommendations: {e}')
