@@ -1,2 +1,2 @@
+mlxtend==0.23.3
 pandas==2.2.3
-mlextend==0.23.3
