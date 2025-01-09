@@ -4,7 +4,7 @@ from collections import defaultdict
 from mlxtend.preprocessing import TransactionEncoder
 from mlxtend.frequent_patterns import fpgrowth, association_rules
 
-VOLUME__PATH = 'app/model/song_recommendations.pkl'
+VOLUME__PATH = '/app/model/song_recommendations.pkl'
 DATASET_URL = 'https://raw.githubusercontent.com/gabriel-urbanin/song-recommender-config/refs/heads/main/spotify_dataset.csv'
 
 def fetch_and_process_dataset():
@@ -17,7 +17,7 @@ def fetch_and_process_dataset():
 def _fetch_dataset():
     try:
         df = pd.read_csv(DATASET_URL)
-        print('Dataset loaded successfully as Dataframe!')
+        print('Dataset successfully fetched from Github and loaded as Dataframe!')
         return df
     except Exception as e:
         print(f'Could not fetch dataset from GitHub: {e}')
@@ -30,6 +30,8 @@ def _create_rules_from_dataset(df_playlists: pd.DataFrame) -> pd.DataFrame:
     te = TransactionEncoder()
     encoded_playlists = te.fit(playlists).transform(playlists)
     df_encoded_playlists = pd.DataFrame(encoded_playlists, columns=te.columns_)
+    
+    print('Creating association rules from playlist data. Please wait a few minutes...')
 
     frequent_itemsets = fpgrowth(df_encoded_playlists, min_support=0.03, use_colnames=True)
     rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.7, num_itemsets=len(playlists))
